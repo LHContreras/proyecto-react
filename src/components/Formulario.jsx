@@ -17,10 +17,9 @@ const handleSubmit = (e) => {
         console.log('Hay al menos un Campo Vacio')
 
         setError(true)
-    } else {
-        console.log('Todos LLenos')
+        return;
     }
-
+    setError(false)
 }
  
   return (
