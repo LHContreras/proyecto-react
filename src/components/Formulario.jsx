@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import Error from "./Error";
 
 // eslint-disable-next-line react/prop-types
-const Formulario = ({pacientes, setPacientes }) => {
+const Formulario = ({pacientes, setPacientes, paciente }) => {
 
 const [nombre, setNombre] = useState('');
 const [propietario, setPropietario] = useState('');
@@ -11,6 +11,16 @@ const [fecha, setFecha] = useState('');
 const [sintomas, setSintomas] = useState('');
 
 const [error, setError] = useState(false)
+
+useEffect(() => {
+    if( Object.keys(paciente).length > 0) {
+        setNombre(paciente.nombre)
+        setPropietario(paciente.propietario)
+        setEmail(paciente.email)
+        setFecha(paciente.fecha)
+        setSintomas(paciente.sintomas)
+    }
+}, [paciente])
 
 const generarId = () => {
     const random = Math.random().toString(36).substr(2);
@@ -130,7 +140,7 @@ const handleSubmit = (e) => {
         <input
         type="submit"
         className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer"
-        value="Agregar Paciente"
+        value={ paciente.id ? 'Editar Paciente' : 'Agregar Paciente'}
         />
       </form>
     </div>
