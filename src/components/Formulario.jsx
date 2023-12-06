@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import Error from "./Error";
 
 // eslint-disable-next-line react/prop-types
-const Formulario = ({pacientes, setPacientes, paciente }) => {
+const Formulario = ({pacientes, setPacientes, paciente, setPaciente }) => {
 
 const [nombre, setNombre] = useState('');
 const [propietario, setPropietario] = useState('');
@@ -46,10 +46,22 @@ const handleSubmit = (e) => {
         email, 
         fecha, 
         sintomas,
-        id: generarId()
+        //id: generarId()
     }
 
-    setPacientes([...pacientes, objetoPaciente]);
+    if(paciente.id) {
+      objetoPaciente.id = paciente.id
+      const pacientesActualizados = pacientes.map( pacienteState => pacienteState.id ===
+        paciente.id ? objetoPaciente : pacienteState)
+
+        setPacientes(pacientesActualizados)
+        setPaciente({})
+    } else {
+        objetoPaciente.id = generarId();
+     setPacientes([...pacientes, objetoPaciente]);
+    }
+
+    
 
     //Reiniciar el form
     setNombre('')
